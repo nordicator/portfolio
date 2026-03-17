@@ -90,7 +90,7 @@ export default function Navbar({ activePage }: { activePage?: "home" | "projects
         }}
       >
         <Link
-          href="/"
+          href="/fun"
           className="flex items-center justify-center w-8 h-8 rounded-full font-bold mr-1 transition-all hover:scale-105 select-none"
           style={{ background: "var(--clay-500)", color: "#FAF0E6", fontFamily: "var(--font-display)", fontSize: "1.05rem" }}
         >

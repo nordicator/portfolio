@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Nunito:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Nunito:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -171,4 +171,12 @@ body::before {
 /* Modal scroll lock */
 .modal-open {
   overflow: hidden;
+}
+
+/* Fun page marquee (faster, no pause on hover) */
+.marquee-track-fun {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+  gap: 1rem;
 }
