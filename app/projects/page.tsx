@@ -4,9 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import CopyEmailButton from "@/components/CopyEmailButton";
 import Navbar from "@/components/Navbar";
 import ProjectBox from "@/components/ProjectBox";
 import ProjectModal from "@/components/ProjectModal";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { projects } from "@/lib/data";
 import type { Project } from "@/lib/data";
 
@@ -121,13 +123,14 @@ function Footer() {
         <p className="text-sm" style={{ color: "var(--clay-600)", fontFamily: "var(--font-mono)" }}>
           © 2026 Ayaan Sajjad
         </p>
-        <a
-          href="mailto:contact@ayaansajjad.ca"
-          className="text-sm font-semibold transition-opacity hover:opacity-60"
+        <CopyEmailButton
+          ariaLabel="Copy contact email address"
+          copiedChildren="Copied to clipboard"
+          className="border-0 bg-transparent p-0 text-sm font-semibold transition-opacity hover:opacity-60 cursor-pointer"
           style={{ color: "var(--clay-400)", fontFamily: "var(--font-body)" }}
         >
-          contact@ayaansajjad.ca
-        </a>
+          {CONTACT_EMAIL}
+        </CopyEmailButton>
       </motion.div>
     </footer>
   );

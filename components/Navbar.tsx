@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import CopyEmailButton from "@/components/CopyEmailButton";
 
 function NavLink({ href, label, active }: { href: string; label: string; active?: boolean }) {
   return (
@@ -20,58 +21,14 @@ function NavLink({ href, label, active }: { href: string; label: string; active?
   );
 }
 
-async function copyTextToClipboard(text: string): Promise<void> {
-  try {
-    // Check if the Clipboard API is available in the browser
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(text);
-      console.log('Text copied to clipboard successfully!');
-      // Optional: Provide user feedback (e.g., a temporary checkmark icon)
-    } else {
-      // Fallback for older browsers or insecure contexts
-      fallbackCopyToClipboard(text);
-    }
-  } catch (err) {
-    console.error('Failed to copy text: ', err);
-    // You could also show a user-facing error message here
-  }
-}
-
-function fallbackCopyToClipboard(text: string): void {
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  // Make the textarea invisible
-  textArea.style.position = "fixed";
-  textArea.style.left = "-999999px";
-  textArea.style.top = "-999999px";
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  try {
-    const successful = document.execCommand('copy');
-    const msg = successful ? 'Successful' : 'Unsuccessful';
-    console.log('Fallback: Copying text command was ' + msg);
-  } catch (err) {
-    console.error('Fallback: Oops, unable to copy', err);
-  }
-  document.body.removeChild(textArea);
-}
-
 export default function Navbar({ activePage }: { activePage?: "home" | "projects" }) {
   const [scrolled, setScrolled] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
-
-  async function handleContact() {
-    await copyTextToClipboard("contact@ayaansajjad.ca");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
 
   return (
     <motion.nav
@@ -98,14 +55,20 @@ export default function Navbar({ activePage }: { activePage?: "home" | "projects
         </Link>
         <NavLink href="/" label="Home" active={activePage === "home"} />
         <NavLink href="/projects" label="Projects" active={activePage === "projects"} />
-        <button
-          onClick={handleContact}
-          className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold ml-1 hover:opacity-90 transition-opacity"
+        <CopyEmailButton
+          ariaLabel="Copy contact email address"
+          copiedChildren={
+            <>
+              <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block" style={{ animation: "pulse-dot 2s ease-in-out infinite" }} />
+              Copied!
+            </>
+          }
+          className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold ml-1 hover:opacity-90 transition-opacity cursor-pointer"
           style={{ background: "var(--clay-500)", color: "#FAF0E6", fontFamily: "var(--font-body)" }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block" style={{ animation: "pulse-dot 2s ease-in-out infinite" }} />
-          {copied ? "Copied!" : "Contact"}
-        </button>
+          Contact
+        </CopyEmailButton>
       </div>
     </motion.nav>
   );

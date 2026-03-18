@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, Check, ArrowUpRight } from "lucide-react";
+import CopyEmailButton from "@/components/CopyEmailButton";
 import Navbar from "@/components/Navbar";
 import ProjectBox from "@/components/ProjectBox";
 import ProjectModal from "@/components/ProjectModal";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { projects, skills, marqueeItems } from "@/lib/data";
 import type { Project } from "@/lib/data";
 
@@ -198,7 +200,15 @@ function Hero() {
         >
           <SocialLink href="https://github.com/nordicator" icon={<Github size={17} />} label="GitHub" />
           <SocialLink href="https://linkedin.com/in/ayaan-sajjad" icon={<Linkedin size={17} />} label="LinkedIn" />
-          <SocialLink href="mailto:contact@ayaansajjad.ca" icon={<Mail size={17} />} label="Email" />
+          <CopyEmailButton
+            ariaLabel="Copy contact email address"
+            copiedAriaLabel={`Copied ${CONTACT_EMAIL} to clipboard`}
+            copiedChildren={<Check size={17} />}
+            className="flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200 hover:scale-105 cursor-pointer"
+            style={{ borderColor: "var(--border)", color: "var(--clay-700)", background: "rgba(245,232,216,0.5)" }}
+          >
+            <Mail size={17} />
+          </CopyEmailButton>
         </motion.div>
       </motion.div>
 
@@ -400,13 +410,14 @@ function Footer() {
           <h2 className="leading-tight mb-7" style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(3rem, 9vw, 7rem)", color: "var(--clay-50)" }}>
             Say <em style={{ color: "var(--clay-400)" }}>hello.</em>
           </h2>
-          <a
-            href="mailto:contact@ayaansajjad.ca"
-            className="inline-block text-base font-semibold hover-link transition-opacity hover:opacity-75"
+          <CopyEmailButton
+            ariaLabel="Copy contact email address"
+            copiedChildren="Copied to clipboard"
+            className="inline-block border-0 bg-transparent p-0 text-base font-semibold hover-link transition-opacity hover:opacity-75 cursor-pointer"
             style={{ color: "var(--clay-300)", fontFamily: "var(--font-body)" }}
           >
-            contact@ayaansajjad.ca
-          </a>
+            {CONTACT_EMAIL}
+          </CopyEmailButton>
         </motion.div>
 
         <motion.div
@@ -422,7 +433,7 @@ function Footer() {
           </p>
           <p className="text-sm flex items-center justify-center gap-2" style={{ color: "var(--clay-600)", fontFamily: "var(--font-mono)" }}>
             Member of{" "}
-            <a href="https://smallwoken.ca" target="_blank" rel="noopener noreferrer" className="hover-link transition-opacity hover:opacity-75" style={{ color: "var(--clay-400)", fontFamily: "var(--font-body)" }}>
+            <a href="https://smallwoken.world" target="_blank" rel="noopener noreferrer" className="hover-link transition-opacity hover:opacity-75" style={{ color: "var(--clay-400)", fontFamily: "var(--font-body)" }}>
               Smallwoken
             </a>
           </p>
