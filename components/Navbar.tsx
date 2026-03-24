@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import CopyEmailButton from "@/components/CopyEmailButton";
+import { usePageTransition } from "@/components/TransitionProvider";
 
 function NavLink({ href, label, active }: { href: string; label: string; active?: boolean }) {
   return (
@@ -23,6 +24,7 @@ function NavLink({ href, label, active }: { href: string; label: string; active?
 
 export default function Navbar({ activePage }: { activePage?: "home" | "projects" }) {
   const [scrolled, setScrolled] = useState(false);
+  const { navigate } = usePageTransition();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -46,13 +48,13 @@ export default function Navbar({ activePage }: { activePage?: "home" | "projects
           boxShadow: scrolled ? "0 6px 28px rgba(44,14,10,0.1)" : "0 2px 10px rgba(44,14,10,0.05)",
         }}
       >
-        <Link
-          href="/fun"
+        <button
+          onClick={() => navigate("/fun")}
           className="flex items-center justify-center w-8 h-8 rounded-full font-bold mr-1 transition-all hover:scale-105 select-none"
-          style={{ background: "var(--clay-500)", color: "#FAF0E6", fontFamily: "var(--font-display)", fontSize: "1.05rem" }}
+          style={{ background: "var(--clay-500)", color: "#FAF0E6", fontFamily: "var(--font-display)", fontSize: "1.05rem", border: "none", cursor: "pointer" }}
         >
           A
-        </Link>
+        </button>
         <NavLink href="/" label="Home" active={activePage === "home"} />
         <NavLink href="/projects" label="Projects" active={activePage === "projects"} />
         <CopyEmailButton
